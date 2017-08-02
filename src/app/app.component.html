@@ -5,4 +5,8 @@
     <input type="password" id="user_pass" placeholder="password">
     <button type="button"><span>Log in</span></button>
   </form>
+
+  <button (click)="reduxTest()">Update User</button>
+  {{userInfo$ | async | json}}
+
 </div>
