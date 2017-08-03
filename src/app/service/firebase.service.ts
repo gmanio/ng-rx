@@ -15,7 +15,7 @@ const firebaseInfo = {
 
 @Injectable()
 export class FirebaseService {
-  private uid = "";
+  private uid = '';
 
   constructor() {
     firebase.initializeApp(firebaseInfo);
@@ -34,9 +34,13 @@ export class FirebaseService {
 
     signIn$.subscribe((user) => {
         this.uid = user.uid;
+        const oUser = new UserModel();
+        oUser.email = user.email;
+
+        this.updateUserInfo(oUser);
       },
       (err) => this.errorHandler(err)
-    )
+    );
 
     return signIn$;
   }
@@ -62,6 +66,14 @@ export class FirebaseService {
     return firebase.auth().currentUser;
   }
 
+  public updateUserInfo(user: UserModel) {
+    if ( this.isLogin() ) {
+      firebase.database()
+        .ref('/UserInfo/' + this.uid)
+        .update(user);
+    }
+  }
+
   public saveUserInfo(user: UserModel) {
     const saveUserInfo$ = new EventEmitter();
 
@@ -78,6 +90,7 @@ export class FirebaseService {
     const onLoadUserInfo$ = new EventEmitter();
 
     if ( this.isLogin() ) {
+      this.uid = this.getCurrentUser()['uid'];
       firebase.database()
         .ref('/UserInfo/' + this.uid)
         .once('value', (snapshot) => {
@@ -107,11 +120,18 @@ export class FirebaseService {
     const loadBodyInfo$ = new EventEmitter();
 
     if ( this.isLogin() ) {
+      this.uid = this.getCurrentUser()['uid'];
       firebase.database()
         .ref('/BodyInfo/' + this.uid)
         .once('value', (snapshot) => {
+            const arrData = [];
+            snapshot.forEach((item) => {
+              arrData.push(item.val());
+              return false;
+            });
+
             // broadcast onMessage
-            loadBodyInfo$.emit(snapshot.val());
+            loadBodyInfo$.emit(arrData);
           }
         );
     }
@@ -123,7 +143,7 @@ export class FirebaseService {
     const clearBodyInfo$ = new EventEmitter();
 
     if ( this.isLogin() ) {
-      console.log(this.uid);
+      this.uid = this.getCurrentUser()['uid'];
       firebase.database()
         .ref('/BodyInfo/' + this.uid)
         .remove()
@@ -140,7 +160,7 @@ export class FirebaseService {
     const clearUserInfo$ = new EventEmitter();
 
     if ( this.isLogin() ) {
-      console.log(this.uid);
+      this.uid = this.getCurrentUser()['uid'];
       firebase.database()
         .ref('/UserInfo/' + this.uid)
         .remove()

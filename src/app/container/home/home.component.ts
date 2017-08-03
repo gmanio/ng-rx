@@ -18,16 +18,17 @@ export class HomeComponent implements AfterViewInit {
         this.firebaseService
           .loadUserInfo()
           .subscribe((data) => {
+            console.log('Success Load :: [ UserModel ]');
             console.log(data);
           });
 
         this.firebaseService
           .loadBodyInfo()
           .subscribe((data) => {
+            console.log('Success Load :: [ BodyModel ]');
             console.log(data);
           });
-      })
-
+      });
   }
 
   public onClickSignOut(): void {

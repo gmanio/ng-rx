@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FirebaseService } from '../../../service/firebase.service';
 
 @Component({
   selector: 'app-graph',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GraphComponent implements OnInit {
 
-  constructor() { }
+  constructor(private firebase: FirebaseService) {
+  }
 
   ngOnInit() {
+    this.firebase
+      .loadBodyInfo()
+      .subscribe(
+        (data) => {
+          console.log(data);
+        }
+      )
   }
 
 }

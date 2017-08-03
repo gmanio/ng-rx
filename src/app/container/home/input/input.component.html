@@ -1,3 +1,27 @@
-<p>
-  input works!
-</p>
+<h3>Input Area</h3>
+<hr>
+<form class="form-horizontal">
+  <div class="form-group">
+    <label for="inp_weight" class="col-sm-2 control-label">몸무게</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="inp_weight" placeholder="몸무게(kg)" [(ngModel)]="weight" name="inp_weight">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inp_muscle" class="col-sm-2 control-label">근육량</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="inp_muscle" placeholder="근육량(%)" [(ngModel)]="muscle" name="inp_muscle">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inp_fat" class="col-sm-2 control-label">지방량</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="inp_fat" placeholder="지방량(%)" [(ngModel)]="fat" name="inp_fat">
+    </div>
+  </div>
+</form>
+<div class="form-group">
+  <div class="col-sm-offset-2 col-sm-10">
+    <button type="submit" class="btn btn-default" (click)="onClickSave()">저장하기</button>
+  </div>
+</div>

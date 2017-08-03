@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { BodyModel } from '../../../model/body.model';
+import { FirebaseService } from '../../../service/firebase.service';
 
 @Component({
   selector: 'app-input',
@@ -6,10 +8,27 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./input.component.css']
 })
 export class InputComponent implements OnInit {
+  public weight;
+  public muscle;
+  public fat;
 
-  constructor() { }
+  constructor(private firebaseService: FirebaseService) {
+  }
 
   ngOnInit() {
   }
 
+  public onClickSave() {
+    const oBody = new BodyModel();
+
+    oBody.weight = this.weight;
+    oBody.percentMuscle = this.muscle;
+    oBody.percentFat = this.fat;
+
+    this.firebaseService
+      .saveBodyInfo(oBody)
+      .subscribe(()=>{
+      debugger;
+      });
+  }
 }

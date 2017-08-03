@@ -32,6 +32,7 @@ import { UserEffect } from './effect/user.effect';
 import { LoginComponent } from './container/login/login.component';
 import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './component/error/page-not-found.component';
+import { LogoService } from './service/logo.service';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { PageNotFoundComponent } from './component/error/page-not-found.componen
   ],
   providers: [
     { provide: APP_BASE_HREF, useValue: '/' },
-    FirebaseService
+    FirebaseService,
+    LogoService
   ],
   bootstrap: [
     AppComponent
