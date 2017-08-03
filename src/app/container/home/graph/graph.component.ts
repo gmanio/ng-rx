@@ -8,17 +8,8 @@ import { FirebaseService } from '../../../service/firebase.service';
 })
 export class GraphComponent implements OnInit {
 
-  constructor(private firebase: FirebaseService) {
+  constructor() {
   }
 
-  ngOnInit() {
-    this.firebase
-      .loadBodyInfo()
-      .subscribe(
-        (data) => {
-          console.log(data);
-        }
-      )
-  }
-
+  ngOnInit() {}
 }

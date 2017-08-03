@@ -1,3 +1,9 @@
-<p>
-  analysis works!
-</p>
+<h3>Analysis Area</h3>
+<hr>
+<div>
+  <ul>
+    <li *ngFor="let item of bodyInfos">
+      Weight: {{ item.weight }} fat: {{ item.fat }}% muscle: {{ item.muscle }}% date:{{ item.date | date }}
+    </li>
+  </ul>
+</div>
