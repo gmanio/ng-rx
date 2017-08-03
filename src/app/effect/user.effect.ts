@@ -15,8 +15,7 @@ export class UserEffect {
     .ofType(userActions.ActionTypes.SAVE_USER_INFO)
     .map(toPayload)
     .map((payload) => new SaveUserInfoCompleteAction(payload))
-
-  //.catch(() => Observable.of(new LoadUserInfoCompleteAction({})))
+    // .catch(() => Observable.of(new LoadUserInfoCompleteAction({})))
 
   constructor(private actions$: Actions) {
   }

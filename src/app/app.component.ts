@@ -3,10 +3,6 @@ import { Store } from '@ngrx/store';
 import * as fromRoot from './reducer';
 import * as userAction from './action/user.action';
 import { Observable } from 'rxjs/Observable';
-import { FirebaseService } from './service/firebase.service';
-import { UserModel } from './model/user.model';
-import { BodyModel } from './model/body.model';
-import { LogoService } from './service/logo.service';
 
 @Component({
   selector: 'app-root',
@@ -25,6 +21,7 @@ export class AppComponent {
   reduxTest() {
     this.store.dispatch(new userAction.SaveUserInfoAction({
       email: 'test@test.com',
+      uid: 'asd',
       age: 20,
       height: 160,
       gender: 'female'

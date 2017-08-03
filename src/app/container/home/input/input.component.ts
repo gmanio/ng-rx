@@ -22,8 +22,8 @@ export class InputComponent implements OnInit {
     const oBody = new BodyModel();
 
     oBody.weight = this.weight;
-    oBody.percentMuscle = this.muscle;
-    oBody.percentFat = this.fat;
+    oBody.muscle = this.muscle;
+    oBody.fat = this.fat;
 
     this.firebaseService
       .saveBodyInfo(oBody)

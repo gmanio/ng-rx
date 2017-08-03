@@ -5,12 +5,16 @@ import * as body from '../action/body.action';
 export interface State {
   loading: boolean;
   selectedDate: number;
+  selectedWeek: number;
+  selectedMonth: number;
   entities: BodyModel[];
 };
 
 const initialState: State = {
   loading: false,
   selectedDate: new Date().getDate(),
+  selectedWeek: new Date().getDate(),
+  selectedMonth: new Date().getDate(),
   entities: []
 };
 
@@ -35,11 +39,13 @@ export function reducer(state = initialState, action: body.Actions): State {
 
 export const getEnities = (state: State) => state.entities;
 export const getSelectedDate = (state: State) => state.selectedDate;
+export const getSelectedWeek = (state: State) => state.selectedWeek;
+export const getSelectedMonth = (state: State) => state.selectedMonth;
 
 export const getSelectedBodyInfo = createSelector(getEnities, getSelectedDate, (entities, selectedDate) => {
-
+  return entities.find((body) => body.date === selectedDate);
 });
 
-export const getBodyInfoList = createSelector(getEnities, (entities) => {
+export const getBodyInfoListWeek = createSelector(getEnities, getSelectedWeek, (entities, selectedWeek) => {
 
-})
+});
