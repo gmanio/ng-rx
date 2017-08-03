@@ -2,6 +2,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import * as firebase from 'firebase';
 import { Observable } from 'rxjs';
 import { UserModel } from '../model/user.model';
+import { BodyModel } from '../model/body.model';
 
 const firebaseInfo = {
   apiKey: 'AIzaSyBS-TvYbLlnsyyqhpIKFMWPcWPXfTvX50U',
@@ -19,7 +20,7 @@ export class FirebaseService {
   constructor() {
     firebase.initializeApp(firebaseInfo);
 
-    this.signIn('user01@sk.com', 'techx1');
+    this.signIn('user02@sk.com', 'techx1');
   }
 
   public isLogin(): boolean {
@@ -33,8 +34,7 @@ export class FirebaseService {
     const loginPromise = firebase.auth().signInWithEmailAndPassword(email, password);
     const signIn$ = Observable.fromPromise(loginPromise).share();
 
-    signIn$.subscribe(
-      (user) => {
+    signIn$.subscribe((user) => {
         this.uid = user.uid;
       },
       (err) => this.errorHandler(err)
@@ -47,8 +47,7 @@ export class FirebaseService {
     const logoutPromise = firebase.auth().signOut();
     const signOut$ = Observable.fromPromise(logoutPromise).share();
 
-    signOut$.subscribe(
-      () => {
+    signOut$.subscribe(() => {
         return true;
       },
       (err) => this.errorHandler(err)
@@ -64,6 +63,19 @@ export class FirebaseService {
   public getCurrentUser(): Object {
     return firebase.auth().currentUser;
   }
+
+  public saveUserInfo(user: UserModel) {
+    const saveUserInfo$ = new EventEmitter();
+
+    if ( this.isLogin() ) {
+      firebase.database()
+        .ref('/UserInfo/' + this.uid)
+        .set(user);
+    }
+
+    return saveUserInfo$;
+  }
+
 
   public loadUserInfo(): EventEmitter<any> {
     const onLoadUserInfo$ = new EventEmitter();
@@ -81,16 +93,67 @@ export class FirebaseService {
     return onLoadUserInfo$;
   }
 
-  public saveUserInfo(user: UserModel) {
-    const saveUserInfo$ = new EventEmitter();
+  public saveBodyInfo(bodies: BodyModel | Array<BodyModel>) {
+    const saveBodyInfo$ = new EventEmitter();
+
+    if ( this.isLogin() ) {
+      firebase.database()
+        .ref('/BodyInfo/' + this.uid)
+        .push()
+        .set(bodies);
+    }
+
+    return saveBodyInfo$;
+  }
+
+  public loadBodyInfo(): EventEmitter<any> {
+    const loadBodyInfo$ = new EventEmitter();
 
     if ( this.isLogin() ) {
       firebase.database()
         .ref('/UserInfo/' + this.uid)
-        .set(user);
+        .once('value', (snapshot) => {
+            // broadcast onMessage
+            loadBodyInfo$.emit(snapshot.val());
+          }
+        );
     }
 
-    return saveUserInfo$;
+    return loadBodyInfo$;
+  }
+
+  public clearBodyInfo() {
+    const clearBodyInfo$ = new EventEmitter();
+
+    if ( this.isLogin() ) {
+      console.log(this.uid);
+      firebase.database()
+        .ref('/BodyInfo/' + this.uid)
+        .remove()
+        .then(() => {
+          console.log('remove success');
+          clearBodyInfo$.emit();
+        });
+    }
+
+    return clearBodyInfo$;
+  }
+
+  public clearUserInfo() {
+    const clearUserInfo$ = new EventEmitter();
+
+    if ( this.isLogin() ) {
+      console.log(this.uid);
+      firebase.database()
+        .ref('/UserInfo/' + this.uid)
+        .remove()
+        .then(() => {
+          console.log('remove success');
+          clearUserInfo$.emit();
+        });
+    }
+
+    return clearUserInfo$;
   }
 
   public errorHandler(err) {

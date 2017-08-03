@@ -5,6 +5,7 @@ import * as userAction from './action/user.action';
 import { Observable } from 'rxjs/Observable';
 import { FirebaseService } from './service/firebase.service';
 import { UserModel } from './model/user.model';
+import { BodyModel } from './model/body.model';
 
 @Component({
   selector: 'app-root',
@@ -20,10 +21,12 @@ export class AppComponent {
               private firebaseService: FirebaseService) {
     this.userInfo$ = store.select(fromRoot.getUserInfo);
 
-    Observable.timer(1500).subscribe(this.firebaseTest.bind(this));
+    // Observable.timer(1500).subscribe(this.firebaseTest.bind(this));
   }
 
   public firebaseTest() {
+
+    // this.firebaseService.clearBodyInfo();
     this.firebaseService
       .loadUserInfo()
       .subscribe(
@@ -33,11 +36,22 @@ export class AppComponent {
 
     const oUser = new UserModel();
     oUser.email = 'user01@sk.com';
-    oUser.age = 27;
+    oUser.age = 40;
     oUser.gender = 'MALE';
     oUser.height = 178;
 
     this.firebaseService.saveUserInfo(oUser);
+
+    const oBody = new BodyModel();
+    oBody.weight = 70;
+    oBody.fatMass = 30;
+    oBody.date = new Date().getTime();
+
+    this.firebaseService.saveBodyInfo(oBody);
+
+    this.firebaseService.loadBodyInfo()
+      .subscribe((data) => {
+      });
   }
 
   reduxTest() {
