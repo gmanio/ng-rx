@@ -7,6 +7,8 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { reducers } from './reducer';
 import { UserEffect } from './effect/user.effect';
+import { APP_BASE_HREF } from '@angular/common';
+import { FirebaseService } from './service/firebase.service';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,10 @@ import { UserEffect } from './effect/user.effect';
       UserEffect
     ])
   ],
-  providers: [],
+  providers: [
+    { provide: APP_BASE_HREF, useValue: '/' },
+    FirebaseService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
