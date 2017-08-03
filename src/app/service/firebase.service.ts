@@ -15,12 +15,10 @@ const firebaseInfo = {
 
 @Injectable()
 export class FirebaseService {
-  private uid = '';
+  private uid = "";
 
   constructor() {
     firebase.initializeApp(firebaseInfo);
-
-    this.signIn('user02@sk.com', 'techx1');
   }
 
   public isLogin(): boolean {
@@ -76,7 +74,6 @@ export class FirebaseService {
     return saveUserInfo$;
   }
 
-
   public loadUserInfo(): EventEmitter<any> {
     const onLoadUserInfo$ = new EventEmitter();
 
@@ -111,7 +108,7 @@ export class FirebaseService {
 
     if ( this.isLogin() ) {
       firebase.database()
-        .ref('/UserInfo/' + this.uid)
+        .ref('/BodyInfo/' + this.uid)
         .once('value', (snapshot) => {
             // broadcast onMessage
             loadBodyInfo$.emit(snapshot.val());

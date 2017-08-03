@@ -27,31 +27,31 @@ export class AppComponent {
   public firebaseTest() {
 
     // this.firebaseService.clearBodyInfo();
-    this.firebaseService
-      .loadUserInfo()
-      .subscribe(
-        (data) => {
-          console.log(data);
-        });
-
-    const oUser = new UserModel();
-    oUser.email = 'user01@sk.com';
-    oUser.age = 40;
-    oUser.gender = 'MALE';
-    oUser.height = 178;
-
-    this.firebaseService.saveUserInfo(oUser);
-
-    const oBody = new BodyModel();
-    oBody.weight = 70;
-    oBody.fatMass = 30;
-    oBody.date = new Date().getTime();
-
-    this.firebaseService.saveBodyInfo(oBody);
-
-    this.firebaseService.loadBodyInfo()
-      .subscribe((data) => {
-      });
+    // this.firebaseService
+    //   .loadUserInfo()
+    //   .subscribe(
+    //     (data) => {
+    //       console.log(data);
+    //     });
+    //
+    // const oUser = new UserModel();
+    // oUser.email = 'user01@sk.com';
+    // oUser.age = 40;
+    // oUser.gender = 'MALE';
+    // oUser.height = 178;
+    //
+    // this.firebaseService.saveUserInfo(oUser);
+    //
+    // const oBody = new BodyModel();
+    // oBody.weight = 70;
+    // oBody.fatMass = 30;
+    // oBody.date = new Date().getTime();
+    //
+    // this.firebaseService.saveBodyInfo(oBody);
+    //
+    // this.firebaseService.loadBodyInfo()
+    //   .subscribe((data) => {
+    //   });
   }
 
   reduxTest() {

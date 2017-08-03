@@ -13,13 +13,6 @@ export class LoginComponent {
 
   constructor(private firebaseService: FirebaseService,
               private router: Router) {
-    //
-    // this.firebaseService.onLoginEmitter$
-    //   .subscribe((isLoggin: boolean) => {
-    //     if ( isLoggin ) {
-    //       this.router.navigate(['chat']);
-    //     }
-    //   })
   }
 
   public login() {

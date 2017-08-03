@@ -23,7 +23,9 @@ import { HomeComponent } from './home.component';
     SettingComponent,
     HomeComponent
   ],
-  providers: [AuthGuard]
+  providers: [
+    AuthGuard
+  ]
 })
 
 export class HomeModule {

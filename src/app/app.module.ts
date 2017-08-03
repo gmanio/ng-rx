@@ -53,7 +53,9 @@ import { PageNotFoundComponent } from './component/error/page-not-found.componen
     { provide: APP_BASE_HREF, useValue: '/' },
     FirebaseService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule {
 }

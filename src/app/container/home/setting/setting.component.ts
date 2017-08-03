@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FirebaseService } from '../../../service/firebase.service';
 
 @Component({
   selector: 'app-setting',
@@ -11,5 +12,4 @@ export class SettingComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }
