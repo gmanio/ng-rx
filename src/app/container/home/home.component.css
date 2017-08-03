@@ -1,0 +1,3 @@
+.wrapper_bottom { position: fixed; display: block; bottom: 0; width: 100%; height: 50px; box-sizing: border-box; text-align: center }
+.wrapper_bottom .wrapper_btn { float: left; position: relative; display: inline-block; width: 25%; height: 50px; box-sizing: border-box; border: 1px solid red; line-height: 50px }
+.wrapper_bottom .btn_link { display: block; width: 100%; height: 100% }

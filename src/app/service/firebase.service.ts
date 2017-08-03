@@ -2,6 +2,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import * as firebase from 'firebase';
 import { Observable } from 'rxjs';
 import { UserModel } from '../model/user.model';
+import { BodyModel } from '../model/body.model';
 
 const firebaseInfo = {
   apiKey: 'AIzaSyBS-TvYbLlnsyyqhpIKFMWPcWPXfTvX50U',
@@ -18,8 +19,6 @@ export class FirebaseService {
 
   constructor() {
     firebase.initializeApp(firebaseInfo);
-
-    this.signIn('user01@sk.com', 'techx1');
   }
 
   public isLogin(): boolean {
@@ -33,12 +32,15 @@ export class FirebaseService {
     const loginPromise = firebase.auth().signInWithEmailAndPassword(email, password);
     const signIn$ = Observable.fromPromise(loginPromise).share();
 
-    signIn$.subscribe(
-      (user) => {
+    signIn$.subscribe((user) => {
         this.uid = user.uid;
+        const oUser = new UserModel();
+        oUser.email = user.email;
+
+        this.updateUserInfo(oUser);
       },
       (err) => this.errorHandler(err)
-    )
+    );
 
     return signIn$;
   }
@@ -47,8 +49,7 @@ export class FirebaseService {
     const logoutPromise = firebase.auth().signOut();
     const signOut$ = Observable.fromPromise(logoutPromise).share();
 
-    signOut$.subscribe(
-      () => {
+    signOut$.subscribe(() => {
         return true;
       },
       (err) => this.errorHandler(err)
@@ -65,20 +66,12 @@ export class FirebaseService {
     return firebase.auth().currentUser;
   }
 
-  public loadUserInfo(): EventEmitter<any> {
-    const onLoadUserInfo$ = new EventEmitter();
-
+  public updateUserInfo(user: UserModel) {
     if ( this.isLogin() ) {
       firebase.database()
         .ref('/UserInfo/' + this.uid)
-        .once('value', (snapshot) => {
-            // broadcast onMessage
-            onLoadUserInfo$.emit(snapshot.val());
-          }
-        );
+        .update(user);
     }
-
-    return onLoadUserInfo$;
   }
 
   public saveUserInfo(user: UserModel) {
@@ -91,6 +84,93 @@ export class FirebaseService {
     }
 
     return saveUserInfo$;
+  }
+
+  public loadUserInfo(): EventEmitter<any> {
+    const onLoadUserInfo$ = new EventEmitter();
+
+    if ( this.isLogin() ) {
+      this.uid = this.getCurrentUser()['uid'];
+      firebase.database()
+        .ref('/UserInfo/' + this.uid)
+        .once('value', (snapshot) => {
+            // broadcast onMessage
+            onLoadUserInfo$.emit(snapshot.val());
+          }
+        );
+    }
+
+    return onLoadUserInfo$;
+  }
+
+  public saveBodyInfo(bodies: BodyModel | Array<BodyModel>) {
+    const saveBodyInfo$ = new EventEmitter();
+
+    if ( this.isLogin() ) {
+      firebase.database()
+        .ref('/BodyInfo/' + this.uid)
+        .push()
+        .set(bodies);
+    }
+
+    return saveBodyInfo$;
+  }
+
+  public loadBodyInfo(): EventEmitter<any> {
+    const loadBodyInfo$ = new EventEmitter();
+
+    if ( this.isLogin() ) {
+      this.uid = this.getCurrentUser()['uid'];
+      firebase.database()
+        .ref('/BodyInfo/' + this.uid)
+        .once('value', (snapshot) => {
+            const arrData = [];
+            snapshot.forEach((item) => {
+              arrData.push(item.val());
+              return false;
+            });
+
+            // broadcast onMessage
+            loadBodyInfo$.emit(arrData);
+          }
+        );
+    }
+
+    return loadBodyInfo$;
+  }
+
+  public clearBodyInfo() {
+    const clearBodyInfo$ = new EventEmitter();
+
+    if ( this.isLogin() ) {
+      this.uid = this.getCurrentUser()['uid'];
+      firebase.database()
+        .ref('/BodyInfo/' + this.uid)
+        .remove()
+        .then(() => {
+          console.log('remove success');
+          clearBodyInfo$.emit();
+        });
+    }
+
+    return clearBodyInfo$;
+  }
+
+  public clearUserInfo() {
+    const clearUserInfo$ = new EventEmitter();
+
+    if ( this.isLogin() ) {
+      this.uid = this.getCurrentUser()['uid'];
+      firebase.database()
+        .ref('/UserInfo/' + this.uid)
+        .remove()
+        .then(() => {
+          console.log('remove success');
+          clearUserInfo$.emit();
+        });
+    }
+
+    return clearUserInfo$;
   }
 
   public errorHandler(err) {

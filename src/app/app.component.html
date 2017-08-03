@@ -1,12 +1,4 @@
-<div class="container">
-  <h1>My {{title}} buddy</h1>
-  <form method="post" action="">
-    <input type="text" id="user_id" placeholder="user ID">
-    <input type="password" id="user_pass" placeholder="password">
-    <button type="button"><span>Log in</span></button>
-  </form>
+<router-outlet></router-outlet>
+<router-outlet name="app-root"></router-outlet>
+<router-outlet name="popup"></router-outlet>
 
-  <button (click)="reduxTest()">Update User</button>
-  {{userInfo$ | async | json}}
-
-</div>
