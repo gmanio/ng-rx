@@ -34,6 +34,7 @@ import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './component/error/page-not-found.component';
 import { LogoService } from './service/logo.service';
 
+
 @NgModule({
   declarations: [
     AppComponent,

@@ -1,7 +1,8 @@
 export class UserModel {
   email: string;
-  height: number;
+  uid: string;
   age: number;
+  height: number;
   gender: string;
 
   constructor() {

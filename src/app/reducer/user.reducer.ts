@@ -3,18 +3,24 @@ import * as user from '../action/user.action';
 
 export interface State {
   loading: boolean;
-  email: string;
-  height: number;
-  age: number;
-  gender: string;
+  info: UserModel;
+  weightRange: number[];
+  fatRange: number[];
+  muscleRange: number[];
 };
 
 const initialState: State = {
   loading: false,
-  email: '',
-  height: 0,
-  age: 0,
-  gender: ''
+  info: {
+    email: '',
+    uid: '',
+    height: 0,
+    age: 0,
+    gender: ''
+  },
+  weightRange: [],
+  fatRange: [],
+  muscleRange: []
 };
 
 export function reducer(state = initialState, action: user.Actions): State {
@@ -27,7 +33,8 @@ export function reducer(state = initialState, action: user.Actions): State {
     }
     case user.ActionTypes.SAVE_USER_INFO_COMPLETE: {
       const userInfo = action.payload;
-      return Object.assign({}, state, userInfo, {
+      return Object.assign({}, state, {
+        info: userInfo,
         loading: false
       });
     }
@@ -43,15 +50,4 @@ export function reducer(state = initialState, action: user.Actions): State {
 }
 
 export const getLoading = (state: State) => state.loading;
-export const getEmail = (state: State) => state.email;
-export const getHeight = (state: State) => state.height;
-export const getAge = (state: State) => state.age;
-export const getGender = (state: State) => state.gender;
-export const getUserInfo = (state: State) => {
-  return {
-    email: state.email,
-    height: state.height,
-    age: state.age,
-    gender: state.gender
-  }
-};
+export const getUserInfo = (state: State) => state.info;

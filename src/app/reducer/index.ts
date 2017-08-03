@@ -15,8 +15,8 @@ export const reducers: ActionReducerMap<State> = {
 export const getUser = (state: State) => state.user;
 export const getBody = (state: State) => state.body;
 
+export const getBodyInfoList = createSelector(getBody, fromBody.getEnities);
 export const getSelectedDate = createSelector(getBody, fromBody.getSelectedDate);
-export const getBodyInfoList = createSelector(getBody, fromBody.getBodyInfoList);
 export const getSelectedBodyInfo = createSelector(getBody, fromBody.getSelectedBodyInfo);
 
 export const getUserInfo = createSelector(getUser, fromUser.getUserInfo);
