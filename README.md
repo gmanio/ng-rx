@@ -7,6 +7,8 @@
 
 [DEPLOY VIEW LINK](https://inbody-c8369.firebaseapp.com)
 
+[GOOGLE VIEW LINK : https://goo.gl/4rGYf4](https://goo.gl/4rGYf4)
+
 #### Basic useful feature list:
 
  * 로그인이 필요하며, 최초 사용자의 키 정보를 입력 받아야 한다.
@@ -22,7 +24,6 @@ BMI = 체중(kg) / 신장(m) / 신장(m)
 
 * 로그인 : email, password 기반 인증
 * 하단 탭 : Input(몸무게, 체지방량, 근육량), Graph(D3), Analysis(D3, SwiperJS), Setting
-
 
 ### Setup
 - Installation

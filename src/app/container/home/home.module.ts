@@ -9,6 +9,7 @@ import { GraphComponent } from './graph/graph.component';
 import { AnalysisComponent } from './analysis/analysis.component';
 import { SettingComponent } from './setting/setting.component';
 import { HomeComponent } from './home.component';
+import { LineGraphComponent } from '../../component/graph/line-graph/line-graph.component';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import { HomeComponent } from './home.component';
     GraphComponent,
     AnalysisComponent,
     SettingComponent,
-    HomeComponent
+    HomeComponent,
+    LineGraphComponent
   ],
   providers: [
     AuthGuard

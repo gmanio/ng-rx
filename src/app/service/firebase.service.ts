@@ -36,6 +36,7 @@ export class FirebaseService {
         this.uid = user.uid;
         const oUser = new UserModel();
         oUser.email = user.email;
+        oUser.uid = user.uid;
 
         this.updateUserInfo(oUser);
       },
@@ -106,11 +107,28 @@ export class FirebaseService {
   public saveBodyInfo(bodies: BodyModel | Array<BodyModel>) {
     const saveBodyInfo$ = new EventEmitter();
 
+    const BodyInfoRef = firebase.database().ref('/BodyInfo/' + this.uid);
+
     if ( this.isLogin() ) {
-      firebase.database()
-        .ref('/BodyInfo/' + this.uid)
-        .push()
-        .set(bodies);
+      if ( bodies instanceof BodyModel ) {
+        BodyInfoRef.push().set(bodies);
+      }
+
+      if ( bodies instanceof Array ) {
+        bodies.forEach((bodyInfo) => {
+          BodyInfoRef.push().set(bodyInfo);
+        })
+      }
+
+      BodyInfoRef.on('value', (snapshot) => {
+        const arrData = [];
+        snapshot.forEach((item) => {
+          arrData.push(item.val());
+          return false;
+        });
+
+        saveBodyInfo$.emit(arrData);
+      })
     }
 
     return saveBodyInfo$;
@@ -123,17 +141,18 @@ export class FirebaseService {
       this.uid = this.getCurrentUser()['uid'];
       firebase.database()
         .ref('/BodyInfo/' + this.uid)
-        .once('value', (snapshot) => {
-            const arrData = [];
-            snapshot.forEach((item) => {
-              arrData.push(item.val());
-              return false;
-            });
+        .once('value')
+        .then((snapshot) => {
+          const arrData = [];
 
-            // broadcast onMessage
-            loadBodyInfo$.emit(arrData);
-          }
-        );
+          snapshot.forEach((item) => {
+            arrData.push(item.val());
+            return false;
+          });
+
+          // broadcast onMessage
+          loadBodyInfo$.emit(arrData);
+        })
     }
 
     return loadBodyInfo$;
