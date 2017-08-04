@@ -19,6 +19,7 @@ export class AnalysisComponent implements OnInit {
       .subscribe((data) => {
         this.bodyInfos = data;
       })
+    
   }
 
   ngOnInit() {

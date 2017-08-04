@@ -1,8 +1,7 @@
 import { createSelector } from '@ngrx/store';
 import { BodyModel } from '../model/body.model';
 import * as body from '../action/body.action';
-import DateHelper from '../Helper/date.helper';
-import { current } from 'codelyzer/util/syntaxKind';
+import DateHelper from '../helper/date.helper';
 
 export interface State {
   loading: boolean;
@@ -30,7 +29,8 @@ export function reducer(state = initialState, action: body.Actions): State {
     case body.ActionTypes.NEW_BODY_INFO_COMPLETE: {
       const bodyInfo = action.payload;
       return Object.assign({}, state, {
-        entities: [...state.entities, bodyInfo]
+        entities: [...state.entities, bodyInfo],
+        loading: false
       });
     }
     case body.ActionTypes.UPDATE_BODY_INFO: {
