@@ -28,7 +28,7 @@ export function reducer(state = initialState, action: user.Actions): State {
     case user.ActionTypes.INIT_USER_INFO: {
       const userInfo = action.payload;
       return Object.assign({}, state, {
-        info: userInfo,
+        info: Object.assign({}, state.info, userInfo)
       });
     }
     case user.ActionTypes.SAVE_USER_INFO: {

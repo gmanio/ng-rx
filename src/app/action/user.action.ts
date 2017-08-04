@@ -25,7 +25,7 @@ export class SaveUserInfoAction implements Action {
 export class SaveUserInfoCompleteAction implements Action {
   type = ActionTypes.SAVE_USER_INFO_COMPLETE;
 
-  constructor(public payload: UserModel) {
+  constructor(public payload: {}) {
   }
 }
 

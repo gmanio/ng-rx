@@ -25,6 +25,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { reducers } from './reducer';
 import { UserEffect } from './effect/user.effect';
+import { BodyEffect } from './effect/body.effect';
 
 /**
  * Component
@@ -32,6 +33,7 @@ import { UserEffect } from './effect/user.effect';
 import { LoginComponent } from './container/login/login.component';
 import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './component/error/page-not-found.component';
+
 
 
 @NgModule({
@@ -46,7 +48,8 @@ import { PageNotFoundComponent } from './component/error/page-not-found.componen
     HomeModule,
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([
-      UserEffect
+      UserEffect,
+      BodyEffect
     ]),
     RootRouter
   ],
