@@ -27,9 +27,14 @@ export class AuthGuard implements CanActivate {
       .do(authenticated => {
         if ( !authenticated ) {
           this.router.navigate(['/login']);
+
           return false;
         }
-        this.store.dispatch(new userAction.InitUserInfoAction(new UserModel(this.firebaseService.getCurrentUser())));
+
+        const oCurrentUserInfo = new UserModel(this.firebaseService.getCurrentUser());
+        const oInitUserInfoAction = new userAction.InitUserInfoAction(oCurrentUserInfo);
+        this.store.dispatch(oInitUserInfoAction);
+
         return true;
       });
   }

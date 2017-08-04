@@ -24,10 +24,19 @@ export class FirebaseService {
     firebase.initializeApp(firebaseInfo);
   }
 
+  public getAuth() {
+    return firebase.auth();
+  }
+
+  public getCurrentUser(): Object {
+    return firebase.auth().currentUser;
+  }
+
   public isLogin(): boolean {
     if ( !!this.getCurrentUser() ) {
       return true;
     }
+
     return false;
   }
 
@@ -35,12 +44,11 @@ export class FirebaseService {
     const loginPromise = firebase.auth().signInWithEmailAndPassword(email, password);
     const signIn$ = Observable.fromPromise(loginPromise).share();
 
-    signIn$.subscribe((user) => {
+    signIn$.subscribe(
+      (user) => {
         this.uid = user.uid;
         const oUser = new UserModel(user);
         this.store.dispatch(new userAction.InitUserInfoAction(oUser));
-
-        this.updateUserInfo(oUser);
       },
       (err) => this.errorHandler(err)
     );
@@ -52,29 +60,7 @@ export class FirebaseService {
     const logoutPromise = firebase.auth().signOut();
     const signOut$ = Observable.fromPromise(logoutPromise).share();
 
-    signOut$.subscribe(() => {
-        return true;
-      },
-      (err) => this.errorHandler(err)
-    )
-
     return signOut$;
-  }
-
-  public getAuth() {
-    return firebase.auth();
-  }
-
-  public getCurrentUser(): Object {
-    return firebase.auth().currentUser;
-  }
-
-  public updateUserInfo(user: UserModel) {
-    if ( this.isLogin() ) {
-      firebase.database()
-        .ref('/UserInfo/' + this.uid)
-        .update(user);
-    }
   }
 
   public saveUserInfo(user: UserModel) {
@@ -87,7 +73,7 @@ export class FirebaseService {
 
       userInfoDBRef.once('value', (snapshot) => {
         saveUserInfo$.emit(snapshot.val());
-      })
+      });
     }
 
     return saveUserInfo$;
@@ -97,8 +83,8 @@ export class FirebaseService {
     const onLoadUserInfo$ = new EventEmitter();
 
     if ( this.isLogin() ) {
-
       this.uid = this.getCurrentUser()['uid'];
+
       firebase.database()
         .ref('/UserInfo/' + this.uid)
         .once('value', (snapshot) => {
@@ -124,7 +110,7 @@ export class FirebaseService {
       if ( bodies instanceof Array ) {
         bodies.forEach((bodyInfo) => {
           BodyInfoRef.push().set(bodyInfo);
-        })
+        });
       }
 
       BodyInfoRef.on('value', (snapshot) => {
@@ -135,7 +121,7 @@ export class FirebaseService {
         });
 
         saveBodyInfo$.emit(arrData);
-      })
+      });
     }
 
     return saveBodyInfo$;
@@ -159,7 +145,7 @@ export class FirebaseService {
 
           // broadcast onMessage
           loadBodyInfo$.emit(arrData);
-        })
+        });
     }
 
     return loadBodyInfo$;
