@@ -5,6 +5,11 @@ export class UserModel {
   height: number;
   gender: string;
 
-  constructor() {
+  constructor(object) {
+    this.email = object.email || '';
+    this.uid = object.uid || '';
+    this.age = object.age || 0;
+    this.height = object.height || 0;
+    this.gender = object.gender || 0;
   }
 }

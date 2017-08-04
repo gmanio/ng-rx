@@ -18,12 +18,11 @@ export class InputComponent {
   }
 
   public onClickSave() {
-    const oBody = new BodyModel();
-    oBody.weight = this.weight;
-    oBody.muscle = this.muscle;
-    oBody.fat = this.fat;
-    oBody.date = new Date().getTime();
-
+    const oBody = new BodyModel({
+      weight: this.weight,
+      muscle: this.muscle,
+      fat: this.fat,
+    });
     this.firebaseService
       .saveBodyInfo(oBody)
       .subscribe(() => {
@@ -259,11 +258,7 @@ export class InputComponent {
     const bodyInfos: Array<BodyModel> = [];
 
     for ( let bodyInfo of example ) {
-      const oBody = new BodyModel();
-      oBody.weight = bodyInfo.weight;
-      oBody.muscle = bodyInfo.muscle;
-      oBody.fat = bodyInfo.fat;
-      oBody.date = bodyInfo.date;
+      const oBody = new BodyModel(bodyInfo);
 
       bodyInfos.push(oBody);
     }
@@ -271,7 +266,6 @@ export class InputComponent {
     this.firebaseService
       .saveBodyInfo(bodyInfos)
       .subscribe(() => {
-      debugger;
         this.router.navigate(['home/analysis'])
       });
   }

@@ -3,6 +3,9 @@ import * as firebase from 'firebase';
 import { Observable } from 'rxjs';
 import { UserModel } from '../model/user.model';
 import { BodyModel } from '../model/body.model';
+import { Store } from '@ngrx/store';
+import * as fromRoot from '../reducer';
+import * as userAction from '../action/user.action';
 
 const firebaseInfo = {
   apiKey: 'AIzaSyBS-TvYbLlnsyyqhpIKFMWPcWPXfTvX50U',
@@ -17,7 +20,7 @@ const firebaseInfo = {
 export class FirebaseService {
   private uid = '';
 
-  constructor() {
+  constructor(private store: Store<fromRoot.State>) {
     firebase.initializeApp(firebaseInfo);
   }
 
@@ -34,9 +37,10 @@ export class FirebaseService {
 
     signIn$.subscribe((user) => {
         this.uid = user.uid;
-        const oUser = new UserModel();
-        oUser.email = user.email;
-        oUser.uid = user.uid;
+        const oUser = new UserModel(user);
+        // oUser.email = user.email;
+        // oUser.uid = user.uid;
+        this.store.dispatch(new userAction.InitUserInfoAction(oUser));
 
         this.updateUserInfo(oUser);
       },
@@ -91,6 +95,7 @@ export class FirebaseService {
     const onLoadUserInfo$ = new EventEmitter();
 
     if ( this.isLogin() ) {
+
       this.uid = this.getCurrentUser()['uid'];
       firebase.database()
         .ref('/UserInfo/' + this.uid)
