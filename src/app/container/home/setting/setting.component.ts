@@ -13,7 +13,7 @@ import { Observable } from 'rxjs/Observable';
   templateUrl: './setting.component.html',
   styleUrls: ['./setting.component.css']
 })
-export class SettingComponent implements OnInit {
+export class SettingComponent {
   @Input()
   public user: UserModel;
   public user$: Observable<UserModel>;
@@ -21,22 +21,25 @@ export class SettingComponent implements OnInit {
   constructor(private firebaseService: FirebaseService,
               private store: Store<fromRoot.State>,
               private router: Router) {
-    //this.user$ = store.select(fromRoot.getUserInfo);
     store.select(fromRoot.getUserInfo)
-      .subscribe((data) => {
-        this.user = data;
-      })
+      .subscribe((currentUserInfo: UserModel) => {
+        this.user = currentUserInfo;
+      });
   }
 
-  ngOnInit(): void {
-    // this.firebaseService
-    //   .loadUserInfo()
-    //   .subscribe((data) => {
-    //     this.user = data;
-    //   })
+  public onClickUpdateUserInfo() {
+    this.firebaseService
+      .saveUserInfo(this.user)
+      .subscribe((resUpdatedUser: UserModel) => {
+        const updatedUser: UserModel = resUpdatedUser;
+        const oSaveUserInfoAction = new userAction.SaveUserInfoAction(updatedUser);
+
+        // dispatch store for UI
+        this.store.dispatch(oSaveUserInfoAction);
+      });
   }
 
-  public onClickRemoveBodyInfo() {
+  public onClickRemoveAllBodyInfo() {
     this.firebaseService.clearBodyInfo();
   }
 
