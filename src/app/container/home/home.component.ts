@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../../reducer';
 import * as userAction from '../../action/user.action';
+import * as bodyAction from '../../action/body.action';
 
 @Component({
   templateUrl: './home.component.html',
@@ -18,23 +19,7 @@ export class HomeComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.store.dispatch(new userAction.LoadUserInfoAction(''));
-    // Observable.timer(1000)
-    //   .subscribe(() => {
-    //     this.firebaseService
-    //       .loadUserInfo()
-    //       .subscribe((data) => {
-    //         console.log('[HomeComponent] :: Success Load UserModel');
-    //         console.log(data);
-    //       });
-    //
-    //     this.firebaseService
-    //       .loadBodyInfo()
-    //       .subscribe((data) => {
-    //         console.log('[HomeComponent] :: Success Load UserModel');
-    //         console.log(data);
-    //       });
-    //   });
-
+    this.store.dispatch(new bodyAction.LoadBodyInfoAction(''));
   }
 
   public onClickSignOut(): void {

@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { BodyModel } from '../../../model/body.model';
 import { FirebaseService } from '../../../service/firebase.service';
 import { Router } from "@angular/router";
+import { Store } from '@ngrx/store';
+import * as fromRoot from '../../../reducer';
+import * as bodyAction from '../../../action/body.action';
 
 @Component({
   selector: 'app-input',
@@ -14,6 +17,7 @@ export class InputComponent {
   public fat: number;
 
   constructor(private firebaseService: FirebaseService,
+              private store: Store<fromRoot.State>,
               private router: Router) {
   }
 
@@ -23,11 +27,13 @@ export class InputComponent {
       muscle: this.muscle,
       fat: this.fat,
     });
-    this.firebaseService
-      .saveBodyInfo(oBody)
-      .subscribe(() => {
-        this.router.navigate(['home/analysis'])
-      });
+    this.store.dispatch(new bodyAction.NewBodyInfoAction(oBody));
+
+    // this.firebaseService
+    //   .saveBodyInfo(oBody)
+    //   .subscribe(() => {
+    //     this.router.navigate(['home/analysis'])
+    //   });
   }
 
   public onClickSaveTempData() {

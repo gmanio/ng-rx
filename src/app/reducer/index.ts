@@ -18,6 +18,8 @@ export const getBody = (state: State) => state.body;
 export const getBodyInfoList = createSelector(getBody, fromBody.getEnities);
 export const getSelectedDate = createSelector(getBody, fromBody.getSelectedDate);
 export const getSelectedBodyInfo = createSelector(getBody, fromBody.getSelectedBodyInfo);
+export const getBodyInfoListWeek = createSelector(getBody, fromBody.getBodyInfoListWeek);
+export const getBodyInfoListMonth = createSelector(getBody, fromBody.getBodyInfoListMonth);
 
 export const getUserInfo = createSelector(getUser, fromUser.getUserInfo);
 

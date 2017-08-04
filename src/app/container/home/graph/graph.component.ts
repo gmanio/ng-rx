@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FirebaseService } from '../../../service/firebase.service';
+import { Store } from '@ngrx/store';
+import * as fromRoot from '../../../reducer';
 
 @Component({
   selector: 'app-graph',
@@ -8,7 +9,15 @@ import { FirebaseService } from '../../../service/firebase.service';
 })
 export class GraphComponent implements OnInit {
 
-  constructor() {
+  constructor(private store: Store<fromRoot.State>) {
+    this.store.select(fromRoot.getBodyInfoListWeek)
+      .subscribe((data) => {
+        console.log(data);
+      })
+    this.store.select(fromRoot.getBodyInfoListMonth)
+      .subscribe((data) => {
+        console.log(data);
+      })
   }
 
   ngOnInit() {}

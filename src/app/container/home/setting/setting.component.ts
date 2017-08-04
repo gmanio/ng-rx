@@ -3,9 +3,9 @@ import { FirebaseService } from '../../../service/firebase.service';
 import { Router } from '@angular/router';
 import { UserModel } from '../../../model/user.model';
 import * as fromRoot from '../../../reducer';
-import * as userAction from '../../../action/user.action';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
+import * as userAction from '../../../action/user.action';
 
 
 @Component({
