@@ -38,8 +38,6 @@ export class FirebaseService {
     signIn$.subscribe((user) => {
         this.uid = user.uid;
         const oUser = new UserModel(user);
-        // oUser.email = user.email;
-        // oUser.uid = user.uid;
         this.store.dispatch(new userAction.InitUserInfoAction(oUser));
 
         this.updateUserInfo(oUser);
@@ -81,11 +79,15 @@ export class FirebaseService {
 
   public saveUserInfo(user: UserModel) {
     const saveUserInfo$ = new EventEmitter();
+    const userInfoDBRef = firebase.database().ref('/UserInfo/' + this.uid);
 
     if ( this.isLogin() ) {
-      firebase.database()
-        .ref('/UserInfo/' + this.uid)
-        .set(user);
+
+      userInfoDBRef.set(user);
+
+      userInfoDBRef.once('value', (snapshot) => {
+        saveUserInfo$.emit(snapshot.val());
+      })
     }
 
     return saveUserInfo$;
