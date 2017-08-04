@@ -2,12 +2,19 @@ import { Action } from '@ngrx/store';
 import { UserModel } from '../model/user.model';
 
 export const ActionTypes = {
+  INIT_USER_INFO: "Init user information",
   SAVE_USER_INFO: 'Save user information',
   SAVE_USER_INFO_COMPLETE: 'Save user information complete',
   LOAD_USER_INFO: 'Load user information',
-  LOAD_USER_INFO_COMPLETE: 'Load user information complete'
+  LOAD_USER_INFO_COMPLETE: 'Load user information complete',
 };
 
+export class InitUserInfoAction implements Action {
+  type = ActionTypes.INIT_USER_INFO;
+
+  constructor(public payload: UserModel) {
+  }
+}
 export class SaveUserInfoAction implements Action {
   type = ActionTypes.SAVE_USER_INFO;
 
@@ -37,6 +44,7 @@ export class LoadUserInfoCompleteAction implements Action {
 }
 
 export type Actions =
+  InitUserInfoAction |
   SaveUserInfoAction |
   SaveUserInfoCompleteAction |
   LoadUserInfoAction |

@@ -2,6 +2,11 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FirebaseService } from '../../../service/firebase.service';
 import { Router } from '@angular/router';
 import { UserModel } from '../../../model/user.model';
+import * as fromRoot from '../../../reducer';
+import * as userAction from '../../../action/user.action';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
+
 
 @Component({
   selector: 'app-setting',
@@ -11,17 +16,24 @@ import { UserModel } from '../../../model/user.model';
 export class SettingComponent implements OnInit {
   @Input()
   public user: UserModel;
+  public user$: Observable<UserModel>;
 
   constructor(private firebaseService: FirebaseService,
+              private store: Store<fromRoot.State>,
               private router: Router) {
-  }
-
-  ngOnInit(): void {
-    this.firebaseService
-      .loadUserInfo()
+    //this.user$ = store.select(fromRoot.getUserInfo);
+    store.select(fromRoot.getUserInfo)
       .subscribe((data) => {
         this.user = data;
       })
+  }
+
+  ngOnInit(): void {
+    // this.firebaseService
+    //   .loadUserInfo()
+    //   .subscribe((data) => {
+    //     this.user = data;
+    //   })
   }
 
   public onClickRemoveBodyInfo() {

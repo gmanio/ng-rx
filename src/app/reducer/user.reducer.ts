@@ -25,8 +25,13 @@ const initialState: State = {
 
 export function reducer(state = initialState, action: user.Actions): State {
   switch ( action.type ) {
+    case user.ActionTypes.INIT_USER_INFO: {
+      const userInfo = action.payload;
+      return Object.assign({}, state, {
+        info: userInfo,
+      });
+    }
     case user.ActionTypes.SAVE_USER_INFO: {
-      // const userInfo = action.payload;
       return Object.assign({}, state, {
         loading: true
       });
@@ -39,10 +44,16 @@ export function reducer(state = initialState, action: user.Actions): State {
       });
     }
     case user.ActionTypes.LOAD_USER_INFO: {
-      return state;
+      return Object.assign({}, state, {
+        loading: true
+      });
     }
     case user.ActionTypes.LOAD_USER_INFO_COMPLETE: {
-      return state;
+      const userInfo = action.payload;
+      return Object.assign({}, state, {
+        info: userInfo,
+        loading: false
+      });
     }
     default:
       return state;
@@ -51,3 +62,4 @@ export function reducer(state = initialState, action: user.Actions): State {
 
 export const getLoading = (state: State) => state.loading;
 export const getUserInfo = (state: State) => state.info;
+export const getUserUid = (state: State) => state.info.uid;
