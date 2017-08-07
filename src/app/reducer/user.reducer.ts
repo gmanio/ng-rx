@@ -1,15 +1,16 @@
 import { UserModel } from '../model/user.model';
 import * as user from '../action/user.action';
+import { createSelector, createFeatureSelector } from '@ngrx/store';
 
-export interface State {
+export interface UserState {
   loading: boolean;
   info: UserModel;
   weightRange: number[];
   fatRange: number[];
   muscleRange: number[];
-};
+}
 
-const initialState: State = {
+const initialState: UserState = {
   loading: false,
   info: {
     email: '',
@@ -23,7 +24,7 @@ const initialState: State = {
   muscleRange: []
 };
 
-export function reducer(state = initialState, action: user.Actions): State {
+export function userReducer(state = initialState, action: user.Actions): UserState {
   switch ( action.type ) {
     case user.ActionTypes.INIT_USER_INFO: {
       const userInfo = action.payload;
@@ -60,6 +61,10 @@ export function reducer(state = initialState, action: user.Actions): State {
   }
 }
 
-export const getLoading = (state: State) => state.loading;
-export const getUserInfo = (state: State) => state.info;
-export const getUserUid = (state: State) => state.info.uid;
+export const getLoading = (state: UserState) => state.loading;
+export const getUserInfo = (state: UserState) => state.info;
+export const getUserUid = (state: UserState) => state.info.uid;
+
+const userReducerSelector = createFeatureSelector('userReducer');
+
+export const getUserInfoSelector = createSelector(userReducerSelector, getUserInfo);

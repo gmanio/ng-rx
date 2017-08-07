@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import * as fromRoot from '../../../reducer';
-import { BodyModel } from '../../../model/body.model';
 import { Observable } from 'rxjs/Observable';
+import { getUserInfoSelector } from '../../../reducer/user.reducer';
+import { UserModel } from '../../../model/user.model';
+import { getBodyInfoListWeek, getBodyInfoListWeekSelector } from '../../../reducer/body.reducer';
+import { BodyModel } from '../../../model/body.model';
 
 @Component({
   selector: 'app-graph',
@@ -13,13 +15,14 @@ export class GraphComponent implements OnInit {
   public weekData$: Observable<BodyModel[]>;
   public option: any;
 
-  constructor(private store: Store<fromRoot.State>) {
-    this.weekData$ = this.store.select(fromRoot.getBodyInfoListWeek);
-    // this.store.select(fromRoot.getBodyInfoListMonth)
+  constructor(private store: Store<BodyModel[]>) {
+    this.weekData$ = this.store.select(getBodyInfoListWeekSelector);
+    // this.store.select(getUserInfoSelector)
     //   .subscribe((data) => {
     //     console.log(data);
-    //   })
+    //   });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 }
