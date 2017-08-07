@@ -1,16 +1,16 @@
 <h3>User Info</h3>
 <hr>
-<form class="form-horizontal" *ngIf="user">
+<form class="form-horizontal" *ngIf="user$">
   <div class="form-group">
     <label class="col-sm-2 control-label">Email</label>
     <div class="col-sm-10">
-      <p class="form-control-static">{{(user|async)?.email}}</p>
+      <p class="form-control-static">{{(user$|async)?.email}}</p>
     </div>
   </div>
   <div class="form-group">
     <label class="col-sm-2 control-label">UUID</label>
     <div class="col-sm-10">
-      <p class="form-control-static">{{(user|async)?.uid}}</p>
+      <p class="form-control-static">{{(user$|async)?.uid}}</p>
     </div>
   </div>
   <div class="form-group">
@@ -18,7 +18,7 @@
     <div class="col-lg-6">
       <div class="input-group">
         <span class="input-group-addon">(cm)</span>
-        <input type="number" class="form-control" aria-label="Text input with radio button" [ngModel]="(user|async)?.height" name="height">
+        <input type="number" class="form-control" aria-label="Text input with radio button" [ngModel]="(user$|async)?.height" name="height">
       </div>
     </div>
     <!--<div class="col-sm-10">-->
@@ -30,7 +30,7 @@
     <div class="col-lg-6">
       <div class="input-group">
         <span class="input-group-addon">(세)</span>
-        <input type="number" class="form-control" aria-label="Text input with radio button" [ngModel]="(user|async)?.age" name="age">
+        <input type="number" class="form-control" aria-label="Text input with radio button" [ngModel]="(user$|async)?.age" name="age">
       </div>
     </div>
     <!--<div class="col-sm-10">-->
@@ -42,14 +42,14 @@
     <div class="form-chec col-sm-2 control-label">
       <label class="form-check-label">
         <input class="form-check-input genderRadio" type="radio" name="genderRadio" id="exampleRadios2" value="female"
-               [checked]="(user|async)?.gender=='female'">
+               [checked]="(user$|async)?.gender=='female'">
         <span>FEMALE (여)</span>
       </label>
     </div>
     <div class="form-check col-sm-2 control-label">
       <label class="form-check-label">
         <input class="form-check-input genderRadio" type="radio" name="genderRadio" id="exampleRadios1" value="male"
-               [checked]="(user|async)?.gender=='male'">
+               [checked]="(user$|async)?.gender=='male'">
         <span>MALE (남)</span>
       </label>
     </div>

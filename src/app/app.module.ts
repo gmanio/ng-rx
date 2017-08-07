@@ -33,6 +33,8 @@ import { BodyEffect } from './effect/body.effect';
 import { LoginComponent } from './container/login/login.component';
 import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './component/error/page-not-found.component';
+import { BodyService } from './service/body.service';
+import { UserService } from './service/user.service';
 
 
 
@@ -55,7 +57,9 @@ import { PageNotFoundComponent } from './component/error/page-not-found.componen
   ],
   providers: [
     { provide: APP_BASE_HREF, useValue: '/' },
-    FirebaseService
+    FirebaseService,
+    BodyService,
+    UserService
   ],
   bootstrap: [
     AppComponent

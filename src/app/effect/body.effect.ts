@@ -3,8 +3,7 @@ import { FirebaseService } from '../service/firebase.service';
 import { Actions, Effect, toPayload } from '@ngrx/effects';
 import * as bodyActions from '../action/body.action';
 import { BodyModel } from "../model/body.model";
-import { LoadBodyInfoCompleteAction } from '../action/body.action';
-import { SaveUserInfoCompleteAction } from '../action/user.action';
+import { LoadBodyInfoCompleteAction, NewBodyInfoActionComplete } from '../action/body.action';
 
 @Injectable()
 export class BodyEffect {
@@ -12,8 +11,8 @@ export class BodyEffect {
     .ofType(bodyActions.ActionTypes.NEW_BODY_INFO)
     .map(toPayload)
     .switchMap((payload) => this.firebaseService.saveBodyInfo(payload))
-    .map((res) => new BodyModel(res))
-    .map((res) => new SaveUserInfoCompleteAction(res));
+    .map((res: BodyModel[]) => new BodyModel(res[res.length - 1]))
+    .map((res) => new NewBodyInfoActionComplete(res));
 
   @Effect() loadBodyInfo$ = this.actions$
     .ofType(bodyActions.ActionTypes.LOAD_BODY_INFO)
