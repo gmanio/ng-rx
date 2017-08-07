@@ -1,9 +1,9 @@
-import { createSelector } from '@ngrx/store';
+import { createSelector, createFeatureSelector } from '@ngrx/store';
 import { BodyModel } from '../model/body.model';
 import * as body from '../action/body.action';
 import DateHelper from '../helper/date.helper';
 
-export interface State {
+export interface BodyState {
   loading: boolean;
   selectedDate: number;
   selectedWeek: number;
@@ -11,7 +11,7 @@ export interface State {
   entities: BodyModel[];
 };
 
-const initialState: State = {
+const initialState: BodyState = {
   loading: false,
   selectedDate: new Date().getTime(),
   selectedWeek: new Date().getTime(),
@@ -19,7 +19,7 @@ const initialState: State = {
   entities: []
 };
 
-export function reducer(state = initialState, action: body.Actions): State {
+export function bodyReducer(state = initialState, action: body.Actions): BodyState {
   switch ( action.type ) {
     case body.ActionTypes.NEW_BODY_INFO: {
       return Object.assign({}, state, {
@@ -67,10 +67,10 @@ export function reducer(state = initialState, action: body.Actions): State {
   }
 }
 
-export const getEnities = (state: State) => state.entities;
-export const getSelectedDate = (state: State) => state.selectedDate;
-export const getSelectedWeek = (state: State) => state.selectedWeek;
-export const getSelectedMonth = (state: State) => state.selectedMonth;
+export const getEnities = (state: BodyState) => state.entities;
+export const getSelectedDate = (state: BodyState) => state.selectedDate;
+export const getSelectedWeek = (state: BodyState) => state.selectedWeek;
+export const getSelectedMonth = (state: BodyState) => state.selectedMonth;
 
 export const getSelectedBodyInfo = createSelector(getEnities, getSelectedDate, (entities, selectedDate) => {
   return entities.find((body) => DateHelper.isSameDay(body.date, selectedDate));
@@ -96,3 +96,11 @@ export const getBodyInfoListMonth = createSelector(getEnities, getSelectedMonth,
 
   return entities.slice(prevIndex, currentIndex + 1);
 });
+
+const bodyReducerSelector = createFeatureSelector('bodyReducer');
+
+export const getBodyInfoList = createSelector(bodyReducerSelector, getEnities);
+export const getSelectedDateSelector = createSelector(bodyReducerSelector, getSelectedDate);
+export const getSelectedBodyInfoSelector = createSelector(bodyReducerSelector, getSelectedBodyInfo);
+export const getBodyInfoListWeekSelector = createSelector(bodyReducerSelector, getBodyInfoListWeek);
+export const getBodyInfoListMonthSelector = createSelector(bodyReducerSelector, getBodyInfoListMonth);

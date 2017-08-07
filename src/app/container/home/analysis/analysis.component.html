@@ -2,7 +2,7 @@
 <hr>
 <div>
   <ul>
-    <li *ngFor="let item of bodyInfos">
+    <li *ngFor="let item of bodyInfos$ | async">
       Weight: {{ item.weight }} fat: {{ item.fat }}% muscle: {{ item.muscle }}% date:{{ item.date | date }}
     </li>
   </ul>
