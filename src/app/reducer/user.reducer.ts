@@ -1,6 +1,6 @@
 import { UserModel } from '../model/user.model';
 import * as user from '../action/user.action';
-import { createSelector, createFeatureSelector } from '@ngrx/store';
+import { createSelector, createFeatureSelector, ActionReducer } from '@ngrx/store';
 
 export interface UserState {
   loading: boolean;
@@ -24,7 +24,7 @@ const initialState: UserState = {
   muscleRange: []
 };
 
-export function userReducer(state = initialState, action: user.Actions): UserState {
+export const userReducer: ActionReducer<UserState> = (state = initialState, action: user.Actions) => {
   switch ( action.type ) {
     case user.ActionTypes.INIT_USER_INFO: {
       const userInfo = action.payload;

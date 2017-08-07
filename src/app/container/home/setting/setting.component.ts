@@ -1,12 +1,11 @@
-import { Component, Input, ElementRef, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { FirebaseService } from '../../../service/firebase.service';
 import { Router } from '@angular/router';
 import { UserModel } from '../../../model/user.model';
-import * as fromRoot from '../../../reducer';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import * as userAction from '../../../action/user.action';
-import { getUserInfoSelector, UserState } from '../../../reducer/user.reducer';
+import { getUserInfoSelector } from '../../../reducer/user.reducer';
+import { AppStore } from '../../../reducer/index';
 
 @Component({
   selector: 'app-setting',
@@ -18,10 +17,8 @@ export class SettingComponent {
   // public user$: Observable<UserModel>;
 
   constructor(private firebaseService: FirebaseService,
-              private store: Store<UserModel>,
-              private router: Router,
-              private el: ElementRef,
-              private cd: ChangeDetectorRef) {
+              private store: Store<AppStore>,
+              private router: Router) {
     this.user = this.store.select(getUserInfoSelector);
 
     // this.store.select(getUserInfoSelector).subscribe((user) => {

@@ -3,6 +3,7 @@ import { BodyModel } from '../../../model/body.model';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { getBodyInfoList } from '../../../reducer/body.reducer';
+import { AppStore } from '../../../reducer/index';
 
 @Component({
   selector: 'app-analysis',
@@ -12,7 +13,7 @@ import { getBodyInfoList } from '../../../reducer/body.reducer';
 export class AnalysisComponent {
   public bodyInfos$: Observable<BodyModel[]>;
 
-  constructor(private store: Store<BodyModel[]>) {
+  constructor(private store: Store<AppStore>) {
     this.bodyInfos$ = this.store.select(getBodyInfoList);
   }
 }

@@ -3,14 +3,14 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from
 import { Observable } from 'rxjs';
 import { FirebaseService } from '../firebase.service';
 import { Store } from '@ngrx/store';
-import * as fromRoot from '../../reducer';
 import * as userAction from '../../action/user.action';
 import { UserModel } from '../../model/user.model';
+import { AppStore } from '../../reducer/index';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(private firebaseService: FirebaseService,
-              private store: Store<fromRoot.State>,
+              private store: Store<AppStore>,
               private router: Router) {
   }
 

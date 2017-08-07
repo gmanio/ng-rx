@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { BodyModel } from '../../../model/body.model';
 import { FirebaseService } from '../../../service/firebase.service';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import * as fromRoot from '../../../reducer';
 import * as bodyAction from '../../../action/body.action';
+import { AppStore } from '../../../reducer/index';
 
 @Component({
   selector: 'app-input',
@@ -17,7 +17,7 @@ export class InputComponent {
   public fat: number;
 
   constructor(private firebaseService: FirebaseService,
-              private store: Store<fromRoot.State>,
+              private store: Store<AppStore>,
               private router: Router) {
   }
 
