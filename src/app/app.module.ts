@@ -36,8 +36,6 @@ import { PageNotFoundComponent } from './component/error/page-not-found.componen
 import { BodyService } from './service/body.service';
 import { UserService } from './service/user.service';
 
-
-
 @NgModule({
   declarations: [
     AppComponent,

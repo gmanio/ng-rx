@@ -20,12 +20,4 @@ export class HomeComponent implements AfterViewInit {
     this.store.dispatch(new userAction.LoadUserInfoAction(''));
     this.store.dispatch(new bodyAction.LoadBodyInfoAction(''));
   }
-
-  public onClickSignOut(): void {
-    this.firebaseService
-      .signOut()
-      .subscribe(() => {
-        this.router.navigate(['login']);
-      });
-  }
 }

@@ -1,0 +1,55 @@
+<form class="form-horizontal" *ngIf="user">
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Email</label>
+    <div class="col-sm-10">
+      <p class="form-control-static">{{user.email}}</p>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">UUID</label>
+    <div class="col-sm-10">
+      <p class="form-control-static">{{user.uid}}</p>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">키</label>
+    <div class="col-lg-6">
+      <div class="input-group">
+        <span class="input-group-addon">(cm)</span>
+        <input type="number" class="form-control" aria-label="Text input with radio button" [(ngModel)]="user.height" name="height">
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">나이</label>
+    <div class="col-lg-6">
+      <div class="input-group">
+        <span class="input-group-addon">&nbsp;(세)&nbsp;</span>
+        <input type="number" class="form-control" aria-label="Text input with radio button" [(ngModel)]="user.age" name="age">
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">성별</label>
+    <div class="form-chec col-sm-2 control-label">
+      <label class="form-check-label">
+        <input class="form-check-input genderRadio" type="radio" name="genderRadio" value="female"
+               [checked]="user?.gender=='female'" (click)="user.gender='female'">
+        <span>FEMALE (여)</span>
+      </label>
+    </div>
+    <div class="form-check col-sm-2 control-label">
+      <label class="form-check-label">
+        <input class="form-check-input genderRadio" type="radio" name="genderRadio" value="male"
+               [checked]="user?.gender=='male'" (click)="user.gender='male'">
+        <span>MALE (남)</span>
+      </label>
+    </div>
+  </div>
+</form>
+
+<div class="form-group">
+  <div class="btn-group col-sm-offset-2 col-sm-10" role="group">
+    <button type="button" class="btn btn-default" (click)="onUpdateUserInfo()">유저 정보 업데이트</button>
+  </div>
+</div>

@@ -16,7 +16,10 @@ export class UserEffect {
   @Effect() saveUserInfo$ = this.actions$
     .ofType(userActions.ActionTypes.SAVE_USER_INFO)
     .map(toPayload)
-    .switchMap((payload) => this.firebaseService.saveUserInfo(payload))
+    .switchMap((payload) => {
+      debugger;
+      return this.firebaseService.saveUserInfo(payload);
+    })
     .map((res) => new UserModel(res))
     .map((res) => new SaveUserInfoCompleteAction(res));
   //.catch(() => Observable.of(new LoadUserInfoFailAction({})))

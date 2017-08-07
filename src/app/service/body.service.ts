@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { AppStore } from '../reducer';
 import { Observable } from 'rxjs/Observable';
 import { BodyModel } from '../model/body.model';
-import DateHelper from "../Helper/date.helper";
+import DateHelper from '../helper/date.helper';
 
 @Injectable()
 export class BodyService {
