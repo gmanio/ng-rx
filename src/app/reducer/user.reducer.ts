@@ -60,11 +60,10 @@ export const userReducer: ActionReducer<UserState> = (state = initialState, acti
       return state;
   }
 }
-
-export const getLoading = (state: UserState) => state.loading;
-export const getUserInfo = (state: UserState) => state.info;
-export const getUserUid = (state: UserState) => state.info.uid;
-
-const userReducerSelector = createFeatureSelector('userReducer');
-
-export const getUserInfoSelector = createSelector(userReducerSelector, getUserInfo);
+// export const getLoading = (state: UserState) => state.loading;
+// export const getUserInfo = (state: UserState) => state.info;
+// export const getUserUid = (state: UserState) => state.info.uid;
+//
+// const userReducerSelector = createFeatureSelector('userReducer');
+//
+// export const getUserInfoSelector = createSelector(userReducerSelector, getUserInfo);

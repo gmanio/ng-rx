@@ -11,6 +11,7 @@ import FormatHelper from '../../../helper/format.helper';
 export class LineGraphComponent implements AfterViewInit, OnChanges {
   @Input() data: Array<any>;
   @Input() option: any;
+  @Input() date: number;
 
   private graphData: Array<any>;
 
@@ -34,7 +35,7 @@ export class LineGraphComponent implements AfterViewInit, OnChanges {
   }
 
   ngAfterViewInit() {
-    console.log('ngAfterViewInit');
+    console.log('ngAfterViewInit', this.data, this.date);
     this.margin = { top: 20, right: 40, bottom: 60, left: 50 };
     this.width = this.elementRef.nativeElement.offsetWidth - this.margin.left - this.margin.right;
     this.height = 500 - this.margin.top - this.margin.bottom;
@@ -88,9 +89,11 @@ export class LineGraphComponent implements AfterViewInit, OnChanges {
   }
 
   ngOnChanges() {
+    console.log('ngOnChanges', this.data, this.date);
     if ( FormatHelper.isEmpty(this.data) ) {
       return;
     }
+
 
     this.graphData = this.data.map((d) => {
       return {
@@ -101,7 +104,14 @@ export class LineGraphComponent implements AfterViewInit, OnChanges {
       };
     });
 
-    this.xScale.domain(d3.extent(this.graphData, (d) => d.date));
+
+    const curDate = DateHelper.removeTime(this.date);
+    let xDomain = [];
+    for ( let i = 6; i >= 0; i-- ) {
+      xDomain.push(DateHelper.removeTime(this.date).setDate(curDate.getDate() - i));
+    }
+
+    this.xScale.domain(xDomain);
     this.yScaleWeight.domain([d3.min(this.graphData, (d) => Math.min(d.weight)) - 2, d3.max(this.graphData, (d) => Math.max(d.weight)) + 2]);
     this.yScaleFat.domain([d3.min(this.graphData, (d) => Math.min(d.fat, d.muscle)) - 2, d3.max(this.graphData, (d) => Math.max(d.fat, d.muscle)) + 2]);
 

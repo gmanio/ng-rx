@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
-import { BodyModel } from '../../../model/body.model';
 import { Observable } from 'rxjs/Observable';
-import { Store } from '@ngrx/store';
-import { getBodyInfoList } from '../../../reducer/body.reducer';
-import { AppStore } from '../../../reducer/index';
+import { BodyModel } from '../../../model/body.model';
+import { BodyService } from '../../../service/body.service';
 
 @Component({
   selector: 'app-analysis',
@@ -13,7 +11,7 @@ import { AppStore } from '../../../reducer/index';
 export class AnalysisComponent {
   public bodyInfos$: Observable<BodyModel[]>;
 
-  constructor(private store: Store<AppStore>) {
-    this.bodyInfos$ = this.store.select(getBodyInfoList);
+  constructor(private bodyService: BodyService) {
+    this.bodyInfos$ = this.bodyService.getBodyInfoList();
   }
 }
