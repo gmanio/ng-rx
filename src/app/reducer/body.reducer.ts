@@ -1,4 +1,4 @@
-import { createSelector, createFeatureSelector } from '@ngrx/store';
+import { ActionReducer, createSelector, createFeatureSelector } from '@ngrx/store';
 import { BodyModel } from '../model/body.model';
 import * as body from '../action/body.action';
 import DateHelper from '../helper/date.helper';
@@ -9,7 +9,7 @@ export interface BodyState {
   selectedWeek: number;
   selectedMonth: number;
   entities: BodyModel[];
-};
+}
 
 const initialState: BodyState = {
   loading: false,
@@ -19,7 +19,7 @@ const initialState: BodyState = {
   entities: []
 };
 
-export function bodyReducer(state = initialState, action: body.Actions): BodyState {
+export const bodyReducer: ActionReducer<BodyState> = (state = initialState, action: body.Actions) => {
   switch ( action.type ) {
     case body.ActionTypes.NEW_BODY_INFO: {
       return Object.assign({}, state, {

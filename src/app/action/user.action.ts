@@ -2,7 +2,7 @@ import { Action } from '@ngrx/store';
 import { UserModel } from '../model/user.model';
 
 export const ActionTypes = {
-  INIT_USER_INFO: "Init user information",
+  INIT_USER_INFO: 'Init user information',
   SAVE_USER_INFO: 'Save user information',
   SAVE_USER_INFO_COMPLETE: 'Save user information complete',
   LOAD_USER_INFO: 'Load user information',

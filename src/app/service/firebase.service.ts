@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 import { UserModel } from '../model/user.model';
 import { BodyModel } from '../model/body.model';
 import { Store } from '@ngrx/store';
-import * as fromRoot from '../reducer';
 import * as userAction from '../action/user.action';
+import { AppStore } from '../reducer/index';
 
 const firebaseInfo = {
   apiKey: 'AIzaSyBS-TvYbLlnsyyqhpIKFMWPcWPXfTvX50U',
@@ -20,7 +20,7 @@ const firebaseInfo = {
 export class FirebaseService {
   private uid = '';
 
-  constructor(private store: Store<fromRoot.State>) {
+  constructor(private store: Store<AppStore>) {
     firebase.initializeApp(firebaseInfo);
   }
 
